@@ -3,23 +3,35 @@ require 'minitest/autorun'
 require_relative "../lib/calculator.rb"
 
 describe Calculator do
-	it "adds 3 and 4" do
-		Calculator.new.add(3, 4).must_equal 7
-	end
+  before do
+    @calculator = Calculator.new
+  end
 
-	it "multiplies two numbers" do
-		Calculator.new.multiply(3, 4).must_equal 12
-	end
+  it "adds two numbers" do
+    @calculator.add(3, 4).must_equal 7
+  end
 
-	it "3 times 4 is greater than 10" do
-		Calculator.new.multiply(3, 4).must_be(:>, 10)
-	end
+  it "multiplies two numbers" do
+    @calculator.multiply(3, 4).must_equal 12
+  end
 
-	it "PI is close to 3.14" do
-		Calculator.new.PI.must_be_close_to(0.01, 3.14)
-	end
+  it "3 times 4 is greater than 10" do
+    @calculator.multiply(3, 4).must_be(:>, 10)
+  end
 
-	it "Creates calculator objects" do
-		Calculator.new.must_be_instance_of(Calculator)
-	end
+  it "PI is close to 3.14" do
+    @calculator.PI.must_be_close_to(0.01, 3.14)
+  end
+
+  it "Creates calculator objects" do
+    @calculator.must_be_instance_of(Calculator)
+  end
+
+  it "boring method returns nil" do
+    @calculator.boring.must_be_nil
+  end
+
+  it "4 divided by zero raises exception" do
+    lambda {@calculator.divide(4, 0)}.must_raise(ZeroDivisionError)
+  end
 end
